@@ -18,7 +18,7 @@ El módulo de Factura.com para WHMCS versiones V6.x y V7.x
 Si requieres más información acerca de la instalación y el uso de este módulo para WHMCS, puedes contactarnos en https://factura.com/contacto o enviar un correo directamente a soporte@factura.com y con gusto te ayudaremos en lo que necesites.
 
 ## Instalación
-Para su instalación sigue el siguiente manual: [a link](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
+Para su instalación sigue el siguiente manual: [clic aquí](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
 
 ## Ver Demo
 
