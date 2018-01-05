@@ -31,8 +31,7 @@ class CoreModule
     public function getURL($parameters)
     {
         if ($parameters['sandbox'] === 'on') {
-            //return 'http://devfactura.in/api/v3/';
-            return 'http://factura.dev/api/';
+            return 'http://devfactura.in/api/';
         } else {
             return 'https://factura.com/api/';
         }
