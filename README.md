@@ -13,7 +13,7 @@ administración.
 - Funcionalidad para que los clientes creen facturas directamente desde el área de clientes.
 - Reporte de historial de facturas y pedidos pendientes de facturar.
 
-El módulo de Factura.com para WHMCS versiones V6.x y V7.x
+El módulo de Factura.com para WHMCS versión **V7.x**
 
 Si requieres más información acerca de la instalación y el uso de este módulo para WHMCS, puedes contactarnos en https://factura.com/contacto o enviar un correo directamente a soporte@factura.com y con gusto te ayudaremos en lo que necesites.
 
