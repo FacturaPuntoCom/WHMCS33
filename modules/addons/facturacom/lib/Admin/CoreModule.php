@@ -261,11 +261,12 @@ class CoreModule
             # code...
             $itemsOrder[$key] = $value;
 
-            $configSat = Capsule::table('tblhostingconfigoptions')
-                ->select("tblhostingconfigoptions.relid as optionrelid", "tblproductconfigoptions.optionname as Nombre", "tblproductconfigoptionssub.optionname as Valor")
-                ->join('tblproductconfigoptions', 'tblproductconfigoptions.id', '=', 'tblhostingconfigoptions.configid')
+            $configSat = Capsule::table('tblproductconfiggroups')
+                ->select("tblproductconfigoptions.optionname as Nombre", "tblproductconfigoptionssub.optionname as Valor")
+                ->join('tblproductconfiglinks', 'tblproductconfiggroups.id', '=', 'tblproductconfiglinks.gid')
+                ->join('tblproductconfigoptions', 'tblproductconfigoptions.gid', '=', 'tblproductconfiggroups.id')
                 ->join('tblproductconfigoptionssub', 'tblproductconfigoptionssub.configid', '=', 'tblproductconfigoptions.id')
-                ->where('tblhostingconfigoptions.relid', $value->hosting)
+                ->where('tblproductconfiglinks.pid', $value->product)
                 ->get();
 
             foreach ($configSat as $ksat => $valsat) {
