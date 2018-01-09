@@ -1,5 +1,9 @@
 # WHMCS Addon de Factura.com versión 2.0
 
+## Change log
+- Ahora se pueden descargar los cfdi 3.2
+- Facturas fuera de fecha y tolerancia no podrán facturarse.
+
 ## Plugin WHMCS
 
 WHMCS es una solución todo en uno para la administración de clientes, pagos y soporte técnico para empresas

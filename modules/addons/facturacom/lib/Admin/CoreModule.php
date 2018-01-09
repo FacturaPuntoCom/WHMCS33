@@ -539,7 +539,14 @@ class CoreModule
 
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
-        $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/' . $params['type'];
+
+        //verificamos version y lo mandamos al lugar indicado
+        if ($params['version'] == '3.3') {
+            $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/' . $params['type'];
+        } else {
+            $uri = $uri_base . 'publica/invoice/' . $params['uid'] . '/' . $params['type'];
+            return header("Location: " . $uri);
+        }
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;

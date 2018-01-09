@@ -78,13 +78,13 @@
                     <td>${$invoice.Total}</td>
                     <td><span class="label status status-{if $invoice.Status eq 'enviada'}paid{else}cancelled{/if}">{$invoice.Status}</span></td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=pdf" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=pdf&version={$invoice.Version" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar PDF
                         </a>
                     </td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=xml" target="_blank" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=xml&version={$invoice.Version" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar XML
                         </a>
