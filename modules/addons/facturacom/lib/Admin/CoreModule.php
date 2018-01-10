@@ -240,11 +240,13 @@ class CoreModule
 
     public function getInvoiceItems($invoiceId)
     {
+        $Setting = $this->getGonfiguration();
+
         $itemsObj = Capsule::table('tblinvoiceitems')
             ->select("tblinvoiceitems.*", "tblhosting.id as hosting", "tblproducts.id as product", "tblhosting.packageid as package")
             ->join('tblinvoices', 'tblinvoices.id', '=', 'tblinvoiceitems.invoiceid')
-            ->join('tblhosting', 'tblhosting.id', '=', 'tblinvoiceitems.relid')
-            ->join('tblproducts', 'tblproducts.id', '=', 'tblhosting.packageid')
+            ->leftJoin('tblhosting', 'tblhosting.id', '=', 'tblinvoiceitems.relid')
+            ->leftJoin('tblproducts', 'tblproducts.id', '=', 'tblhosting.packageid')
             ->where('tblinvoiceitems.invoiceid', $invoiceId)
             ->get();
 
@@ -262,19 +264,29 @@ class CoreModule
                 ->where('tblproductconfiglinks.pid', $value->product)
                 ->get();
 
-            foreach ($configSat as $ksat => $valsat) {
-                if ($valsat->Nombre == 'ClaveProdServ') {
-                    $itemsOrder[$key]->ClaveProdServ = $valsat->Valor;
+            if(count($configSat) > 0) {
+
+                foreach ($configSat as $ksat => $valsat) {
+                    if ($valsat->Nombre == 'ClaveProdServ') {
+                        $itemsOrder[$key]->ClaveProdServ = $valsat->Valor;
+                    }
+
+                    if ($valsat->Nombre == 'ClaveUnidad') {
+                        $itemsOrder[$key]->ClaveUnidad = $valsat->Valor;
+                    }
+
+                    if ($valsat->Nombre == 'Unidad') {
+                        $itemsOrder[$key]->Unidad = $valsat->Valor;
+                    }
                 }
 
-                if ($valsat->Nombre == 'ClaveUnidad') {
-                    $itemsOrder[$key]->ClaveUnidad = $valsat->Valor;
-                }
-
-                if ($valsat->Nombre == 'Unidad') {
-                    $itemsOrder[$key]->Unidad = $valsat->Valor;
-                }
+            } else {
+                $itemsOrder[$key]->ClaveProdServ = $Setting['ClaveProdServ'];
+                $itemsOrder[$key]->ClaveUnidad = $Setting['ClaveUnidad'];
+                $itemsOrder[$key]->Unidad = $Setting['Unidad'];
             }
+
+
         }
 
         return $itemsOrder;
@@ -470,7 +482,7 @@ class CoreModule
                 $productPrice = $value->amount;
             }
 
-            $importeImpuesto = ($productPrice * 0.16);
+            $importeImpuesto = round(($productPrice * 0.16), 2);
 
             $product = [
                 'ClaveProdServ' => $value->ClaveProdServ,
@@ -540,7 +552,7 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        //verificamos version y lo mandamos al lugar indicado
+        //verificamos version f
         if ($params['version'] == '3.3') {
             $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/' . $params['type'];
         } else {

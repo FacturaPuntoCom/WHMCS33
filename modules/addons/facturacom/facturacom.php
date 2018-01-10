@@ -29,7 +29,7 @@ function facturacom_config()
         'name' => 'Factura.com',
         'version' => '2.0',
         'author' => 'Factura.com',
-        'logo' => '../modules/addons/facturacom/factura-addon-icon.png',
+        'logo' => '/modules/addons/facturacom/factura-addon-icon.png',
         'description' => 'Módulo de integración con el servicio de
                     Factura.com para administrar y emitir facturas electrónicas. Ahora el plugin tiene soporte para timbrado de CFDI 3.3.',
         'fields' => [
@@ -74,13 +74,31 @@ function facturacom_config()
                 'FriendlyName' => 'Uso de CFDI',
                 'Type' => 'text',
                 "Size" => "100",
-                "Description" => "Debes indicar el Uso de CFDI, este se incorporará en el documento",
+                "Description" => "<br>Debes indicar el UsoCFDI, estipulado en el catalogo <b>c_UsoCFDI</b>, éste se incorporará en el documento",
             ],
             'SendEmail' => [
                 'FriendlyName' => 'Enviar por email',
                 'Type' => 'yesno',
                 "Size" => "25",
                 "Description" => "Si deseas que tu cliente reciba su factura en cuanto el mismo se facture desde el área de cliente",
+            ],
+            'ClaveProdServ' => [
+                'FriendlyName' => 'Clave producto/servicio',
+                'Type' => 'text',
+                "Size" => "60",
+                "Description" => "<br>Agrega el valor de <b>ClaveProdServ</b> para tus productos que no tengan datos del sat configurados cómo custom invoices",
+            ],
+            'ClaveUnidad' => [
+                'FriendlyName' => 'Clave Unidad',
+                'Type' => 'text',
+                "Size" => "60",
+                "Description" => "<br>Agrega el valor de <b>c_ClaveUnidad</b> para tus productos que no tengan datos del sat configurados cómo custom invoices",
+            ],
+            'Unidad' => [
+                'FriendlyName' => 'Unidad',
+                'Type' => 'text',
+                "Size" => "60",
+                "Description" => "<br>Agrega el valor de <b>c_ClaveUnidad</b> para tus productos que no tengan datos del sat configurados cómo custom invoices",
             ],
         ],
     ];

@@ -12,7 +12,7 @@
     <table id="tableClientToInvoicesList" class="table table-list">
         <thead>
             <tr>
-                <th>No. Factura</th>
+                <th>No. Pedido</th>
                 <th>Fecha de factura</th>
                 <th>Fecha de pago</th>
                 <th>Monto total</th>
@@ -75,16 +75,16 @@
                     <td><span class="hidden">{$invoice.FechaTimbrado}</span>{$invoice.FechaTimbrado}</td>
                     <td>{$invoice.Receptor}</td>
                     <td><a href="clientarea.php?action=productdetails&id={$invoice.NumOrder}">{$invoice.NumOrder}</a></td>
-                    <td>${$invoice.Total}</td>
+                    <td>${$invoice.Total|number_format:2:".":","}</td>
                     <td><span class="label status status-{if $invoice.Status eq 'enviada'}paid{else}cancelled{/if}">{$invoice.Status}</span></td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=pdf&version={$invoice.Version" target="_blank" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=pdf&version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar PDF
                         </a>
                     </td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=xml&version={$invoice.Version" target="_blank" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=xml&version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar XML
                         </a>

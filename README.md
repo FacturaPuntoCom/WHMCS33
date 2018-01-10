@@ -1,6 +1,11 @@
 # WHMCS Addon de Factura.com versión 2.0
 
 ## Change log
+###2.0.2
+- Ahora puedes facturar pedidos customizados es decir cuando no fue creado con un producto.
+- Hemos actualizado el manual con nuevas configuraciones para poder facturar pedidos customizados.  [clic aquí](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
+
+###2.0.1
 - Ahora se pueden descargar los cfdi 3.2
 - Facturas fuera de fecha y tolerancia no podrán facturarse.
 
