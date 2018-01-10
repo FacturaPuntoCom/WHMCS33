@@ -2,11 +2,11 @@
 
 ## Change log
 
-[2.0.2] - 2018-01-10
+## [2.0.2] - 2018-01-10
 - Ahora puedes facturar pedidos customizados es decir cuando no fue creado con un producto.
 - Hemos actualizado el manual con nuevas configuraciones para poder facturar pedidos customizados.  [clic aquí](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
 
-[2.0.1] - 2018-01-09
+## [2.0.1] - 2018-01-09
 - Ahora se pueden descargar los cfdi 3.2
 - Facturas fuera de fecha y tolerancia no podrán facturarse.
 
