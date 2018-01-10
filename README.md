@@ -4,7 +4,7 @@
 
 ## [2.0.2] - 2018-01-10
 
-## Add
+## Added
 - Ahora puedes facturar pedidos customizados es decir cuando no fue creado con un producto.
 - Hemos actualizado el manual con nuevas configuraciones para poder facturar pedidos customizados.  [clic aquí](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
 
