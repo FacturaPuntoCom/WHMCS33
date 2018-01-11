@@ -106,11 +106,21 @@ class CoreModule
 
             //vamos sobre el tiempo de tolerancia para facturar.
             Carbon::setLocale('es');
-            $fpago = explode("-", date("Y-m-d", strtotime($value->datepaid)));
-            $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
+            $strtotime = strtotime($value->datepaid);
+            $fpago = explode("-", date("Y-m-d", $strtotime));
+
+            if(is_null($strtotime) || $strtotime < 1) {
+                $dt = Carbon::createFromDate(2000, 01, 01);
+            } else {
+                $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
+            }
 
             //Sacamos la diferencia
-            $diferenciaDicas =  ($dt->diffInDays(Carbon::now()) - $dt->daysInMonth);
+            if($dt->diffInDays(Carbon::now()) > 30) {
+                $diferenciaDicas = $dt->diffInDays(Carbon::now());
+            } else {
+                $diferenciaDicas =  ($dt->diffInDays(Carbon::now()) - $dt->daysInMonth);
+            }
 
             //si la orden no está facturada y tiene dias entonces
             if(intval($diferenciaDicas) > $configEntity['DayOff']) {
@@ -190,11 +200,22 @@ class CoreModule
 
             //vamos sobre el tiempo de tolerancia para facturar.
             Carbon::setLocale('es');
-            $fpago = explode("-", date("Y-m-d", strtotime($value->datepaid)));
-            $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
+            $strtotime = strtotime($value->datepaid);
+            $fpago = explode("-", date("Y-m-d", $strtotime));
+
+            if(is_null($strtotime) || $strtotime < 1) {
+                $dt = Carbon::createFromDate(2000, 01, 01);
+            } else {
+                $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
+            }
+
 
             //Sacamos la diferencia
-            $diferenciaDicas =  ($dt->diffInDays(Carbon::now()) - $dt->daysInMonth);
+            if($dt->diffInDays(Carbon::now()) > 30) {
+                $diferenciaDicas = $dt->diffInDays(Carbon::now());
+            } else {
+                $diferenciaDicas =  ($dt->diffInDays(Carbon::now()) - $dt->daysInMonth);
+            }
 
             //si la orden no está facturada y tiene dias entonces
             if(intval($diferenciaDicas) > $configEntity['DayOff']) {

@@ -6,6 +6,7 @@
 
 ### Fixed
 - Ahora si intentas ir a facturacion.php y no haz iniciado sesión automáticamente te envía al login.
+- Se corrigió el problema con orders que no tenían fecha de pago.
 
 ## [2.0.2] - 2018-01-10
 
