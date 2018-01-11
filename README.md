@@ -2,19 +2,24 @@
 
 # Changelog
 
+## [2.0.3] - 2018-01-11
+
+### Fixed
+- Ahora si intentas ir a facturacion.php y no haz iniciado sesión automáticamente te envía al login.
+
 ## [2.0.2] - 2018-01-10
 
-## Added
+### Added
 - Ahora puedes facturar pedidos customizados es decir cuando no fue creado con un producto.
 - Hemos actualizado el manual con nuevas configuraciones para poder facturar pedidos customizados.  [clic aquí](https://facturacom.kayako.com/article/77-instalacion-de-plugin-de-factura-com-para-whmcs)
 
 ## [2.0.1] - 2018-01-09
 
-## Changed
+### Changed
 - Ahora se pueden descargar los cfdi 3.2
 - Facturas fuera de fecha y tolerancia no podrán facturarse.
 
-## Plugin WHMCS
+### Plugin WHMCS
 
 WHMCS es una solución todo en uno para la administración de clientes, pagos y soporte técnico para empresas
 online.

@@ -11,6 +11,7 @@ $ca = new ClientArea();
 
 $ca->setPageTitle('Factura tus servicios');
 $ca->initPage();
+$ca->requireLogin();
 
 // Check login status
 if ($ca->isLoggedIn()) {
