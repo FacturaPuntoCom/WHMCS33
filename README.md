@@ -1,6 +1,12 @@
-# WHMCS Addon de Factura.com versión 2.0.3
+# WHMCS Addon de Factura.com versión 2.0.4
 
 # Changelog
+
+## [2.0.4] - 2018-01-12
+
+### Fixed
+- Ahora los mesajes de error en el xml son mostrados en pantalla.
+- Se eliminó la redirección cuando hay un error.
 
 ## [2.0.3] - 2018-01-11
 
