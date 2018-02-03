@@ -1,4 +1,12 @@
-# WHMCS Addon de Factura.com versión 2.0.4
+# WHMCS Addon de Factura.com versión 2.0.5
+
+# Changelog
+
+## [2.0.5] - 2018-02-02
+
+### Fixed
+- Fix productos en 0 pesos.
+- Fix domicilio calle guardaba razón social.
 
 # Changelog
 

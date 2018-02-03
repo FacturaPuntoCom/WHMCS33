@@ -209,7 +209,6 @@ class CoreModule
                 $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
             }
 
-
             //Sacamos la diferencia
             if($dt->diffInDays(Carbon::now()) > 30) {
                 $diferenciaDicas = $dt->diffInDays(Carbon::now());
@@ -465,14 +464,14 @@ class CoreModule
                 'telefono' => $clientData["fiscal-telefono"],
                 'razons' => $clientData["fiscal-nombre"],
                 'rfc' => $clientData["fiscal-rfc"],
-                'calle' => $clientData["fiscal-nombre"],
+                'calle' => $clientData["fiscal-calle"],
                 'numero_exterior' => $clientData["fiscal-exterior"],
                 'numero_interior' => $clientData["fiscal-interior"],
                 'codpos' => $clientData["fiscal-cp"],
                 'colonia' => $clientData["fiscal-colonia"],
-                'estado' => $clientData["fiscal-municipio"],
-                'ciudad' => $clientData["fiscal-estado"],
-                'delegacion' => $clientData["fiscal-pais"],
+                'estado' => $clientData["fiscal-estado"],
+                'ciudad' => $clientData["fiscal-municipio"],
+                'delegacion' => $clientData["fiscal-municipio"],
                 'save' => true,
                 'client_reference' => $clientW,
             );
@@ -496,6 +495,8 @@ class CoreModule
         //Adding concepts to invoice
         foreach ($itemsCollection as $value) {
             $productPrice = 0;
+            $TipoFactor = 'Tasa';
+            $TasaOCuota = 0.16;
 
             if ($Setting["IVA"] == 'on') {
                 $productPrice = $value->amount / 1.16;
@@ -503,7 +504,18 @@ class CoreModule
                 $productPrice = $value->amount;
             }
 
+            //Nodo:Traslado
+            $NodoTraslado =
+
             $importeImpuesto = round(($productPrice * 0.16), 2);
+
+            //Para productos cero pesos
+            if($importeImpuesto <  1) {
+                $productPrice = 0.01;
+                $TipoFactor = 'Exento';
+                $importeImpuesto = 0;
+                $TasaOCuota = 0;
+            }
 
             $product = [
                 'ClaveProdServ' => $value->ClaveProdServ,
@@ -515,7 +527,7 @@ class CoreModule
                 'Descuento' => '0',
                 'Impuestos' => [
                     'Traslados' => [
-                        ['Base' => $productPrice, 'Impuesto' => '002', 'TipoFactor' => 'Tasa', 'TasaOCuota' => '0.16', 'Importe' => $importeImpuesto],
+                        ['Base' => $productPrice, 'Impuesto' => '002', 'TipoFactor' => $TipoFactor, 'TasaOCuota' => $TasaOCuota, 'Importe' => $importeImpuesto],
                     ],
                 ],
             ];
@@ -528,6 +540,8 @@ class CoreModule
         } else {
             $num_cta = $numerocuenta;
         }
+
+        //return print_r($invoiceConcepts);
 
         $invoiceData = [
             "Receptor" => ["UID" => $clientFactura['Data']['UID']],
@@ -557,7 +571,13 @@ class CoreModule
             ],
         ])->json();
 
-        return $createInvoice;
+        $response = $createInvoice;
+
+        if($response['response'] == 'error' && is_array($response['message'])) {
+            $response = ['response' => 'error', 'message' => $response['message']['message']];
+        }
+
+        return $response;
     }
 
     public function getCFDI($params)
