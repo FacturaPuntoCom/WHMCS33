@@ -1,6 +1,12 @@
-# WHMCS Addon de Factura.com versión 2.0.5
+# WHMCS Addon de Factura.com versión 2.0.6
 
 # Changelog
+
+## [2.0.6] - 2018-02-06
+
+### Added
+- Pagindador a pedidos sin facturar.
+
 
 ## [2.0.5] - 2018-02-02
 

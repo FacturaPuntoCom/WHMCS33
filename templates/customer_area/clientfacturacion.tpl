@@ -1,13 +1,14 @@
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" media="screen" title="no title" charset="utf-8">
 <link rel="stylesheet" href="templates/{$template}/customer_area/clientfacturacion.min.css" media="screen" title="no title" charset="utf-8">
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="templates/{$template}/customer_area/clientfacturacion.min.js"></script>
 <h3>Pedidos sin facturar</h3>
 <input type="hidden" id="systemURL" value="{$systemURL}">
 <input type="hidden" id="serieInvoices" value="{$serieInvoices}">
 <input type="hidden" id="UsoCFDI" value="{$UsoCFDI}">
 <input type="hidden" id="clientW" value="{$clientW}">
+
 <div class="table-container clearfix">
     <table id="tableClientToInvoicesList" class="table table-list">
         <thead>
@@ -24,7 +25,7 @@
             {foreach key=num item=order from=$whmcsInvoices}
                 <tr>
                     <td>
-                        <a href="clientarea.php?action=productdetails&id={$order.orderId}">{$order.orderId}</a>
+                        <a href="clientarea.php?action=productdetails&amp;id={$order.orderId}">{$order.orderId}</a>
                     </td>
                     <td>{$order.orderDate}</td>
                     <td>{$order.invoiceDatePaid}</td>
@@ -38,9 +39,9 @@
                         {if $order.open eq 'true'}
                         <a href="#" class="btn btn-success btn-modal-form"
                                 data-uid="{$order.orderId}"
-                                data-items='{$order.orderdata}'
+                                data-items="{$order.orderdata}"
                                 data-toggle="modal" data-target="#modalForm">
-                            <span class="glyphicon glyphicon-list-alt"></span>
+                                <span class="glyphicon glyphicon-list-alt"></span>
                             Facturar
                         </a>
                         {else}
@@ -74,17 +75,17 @@
                     <td>{$invoice.Folio}</td>
                     <td><span class="hidden">{$invoice.FechaTimbrado}</span>{$invoice.FechaTimbrado}</td>
                     <td>{$invoice.Receptor}</td>
-                    <td><a href="clientarea.php?action=productdetails&id={$invoice.NumOrder}">{$invoice.NumOrder}</a></td>
+                    <td><a href="clientarea.php?action=productdetails&amp;id={$invoice.NumOrder}">{$invoice.NumOrder}</a></td>
                     <td>${$invoice.Total|number_format:2:".":","}</td>
                     <td><span class="label status status-{if $invoice.Status eq 'enviada'}paid{else}cancelled{/if}">{$invoice.Status}</span></td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=pdf&version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&amp;type=pdf&amp;version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar PDF
                         </a>
                     </td>
                     <td class="responsive-edit-button">
-                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&type=xml&version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
+                        <a href="{$systemURL}modules/addons/facturacom/lib/downloadhandler.php?uid={$invoice.UID}&amp;type=xml&amp;version={$invoice.Version}" target="_blank" class="btn-send-email btn btn-info">
                             <span class="glyphicon glyphicon-file"></span>
                             Descargar XML
                         </a>
