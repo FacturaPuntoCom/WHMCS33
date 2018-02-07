@@ -500,6 +500,12 @@ class CoreModule
 
             if ($Setting["IVA"] == 'on') {
                 $productPrice = $value->amount / 1.16;
+                $decimas = explode(".", $productPrice);
+
+                //verificamos que no exceda el máximo de decimales
+                if(strlen($decimas[1]) > 6) {
+                    $productPrice = round($productPrice, 6);
+                }
             } else {
                 $productPrice = $value->amount;
             }

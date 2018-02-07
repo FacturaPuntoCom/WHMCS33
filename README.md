@@ -1,6 +1,11 @@
-# WHMCS Addon de Factura.com versión 2.0.6
+# WHMCS Addon de Factura.com versión 2.0.7
 
 # Changelog
+
+## [2.0.7] - 2018-02-06
+
+### Fixed
+- Fix decimales cuando se resta el iva del producto.
 
 ## [2.0.6] - 2018-02-06
 
