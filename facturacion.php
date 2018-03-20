@@ -40,6 +40,9 @@ if ($ca->isLoggedIn()) {
         }
     }
 
+    //Traemos los usos de CFDI
+    $UsosCFDI = $CoreModule->getUsoCFDI();
+
     $ca->caching = false;
     $ca->assign('clientW', $ca->getUserID());
     $ca->assign('whmcsInvoices', $OrdersWHMCS);
@@ -48,7 +51,7 @@ if ($ca->isLoggedIn()) {
     $ca->assign('apiUrl', $urlCallApi);
     $ca->assign('serieInvoices', $Settings['Serie']);
     $ca->assign('UsoCFDI', $Settings['UsoCFDI']);
-
+    $ca->assign('Usos', $UsosCFDI);
 
 
 } else {

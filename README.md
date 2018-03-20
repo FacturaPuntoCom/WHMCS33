@@ -1,6 +1,17 @@
-# WHMCS Addon de Factura.com versión 2.0.7
+# WHMCS Addon de Factura.com versión 2.0.8
 
 # Changelog
+
+
+## [2.0.8] - 2018-03-20
+
+### Added
+- Multiple RFC para facturar.
+- UsoCFDI ahora el usuario podrá elegí el uso de su cfdi.
+- Ahora los conceptos negativos son tomados como descuentos que se aplican al CFDI
+
+### Fixed
+- Fix actualización de datos de cliente.
 
 ## [2.0.7] - 2018-02-06
 

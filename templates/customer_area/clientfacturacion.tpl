@@ -6,7 +6,6 @@
 <h3>Pedidos sin facturar</h3>
 <input type="hidden" id="systemURL" value="{$systemURL}">
 <input type="hidden" id="serieInvoices" value="{$serieInvoices}">
-<input type="hidden" id="UsoCFDI" value="{$UsoCFDI}">
 <input type="hidden" id="clientW" value="{$clientW}">
 
 <div class="table-container clearfix">
@@ -196,7 +195,7 @@
                   <input type="hidden" name="csrf" value="">
                   <input type="hidden" id="apimethod" name="apimethod" value="create">
                   <div class="input-group">
-                      <label for="disabledSelect">Método de pago</label>
+                      <label for="disabledSelect">Forma de pago</label>
                       <select class="input-cap f-input f-top valid" id="paymentMethod">
                           <option value="01">Efectivo</option>
                           <option value="02">Cheque nominativo</option>
@@ -213,6 +212,16 @@
                   <div class="input-group" id="num-cta-box">
                       <label for="input-numerocuenta">Últimos 4 dígitos de la cuenta</label>
                       <input type="text" class="input-cap f-input f-top" id="input-numerocuenta" name="input-numerocuenta" value="" placeholder="" data-validation="required" data-validation-error-msg="Por favor ingrese un valor válido" >
+                  </div>
+
+                  <div class="input-group">
+                      <label for="disabledSelect">Uso CFDI</label>
+
+                      <select class="input-cap f-input f-top valid" id="UsoCFDI" name="UsoCFDI">
+                      {foreach $Usos as $key => $Uso}
+                          <option value="{$key}" {if $key eq $UsoCFDI}selected="selected"{/if}>{$Uso}</option>
+                      {/foreach}
+                      </select>
                   </div>
               </div>
 

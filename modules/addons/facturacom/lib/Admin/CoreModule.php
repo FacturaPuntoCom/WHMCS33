@@ -237,11 +237,16 @@ class CoreModule
         return $collection;
     }
 
-    public function getInvoicesFacturacom($UserID)
+    public function getInvoicesFacturacom($UserID, $Pedidos)
     {
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
-        $uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID;
+
+        if (!isset($Pedidos)) {
+			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID;
+		} else {
+			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
+		}
 
         $invoices_filtred = [];
 
@@ -437,7 +442,7 @@ class CoreModule
      * @param String $paymentMethod
      * @return Array
      */
-    public function createInvoice($orderNum, $orderItems, $clientData, $serieInvoices, $clientW, $paymentMethod, $numerocuenta)
+    public function createInvoice($orderNum, $orderItems, $clientData, $serieInvoices, $clientW, $paymentMethod, $numerocuenta, $usoCFDI)
     {
 
         /*if ($clientData['clientUID'] == "") {
@@ -451,43 +456,41 @@ class CoreModule
         $clientUID = $clientData["clientUID"] ?: false;
         $clientRFC = $clientData['fiscal-rfc'];
         $invoiceData = [];
+        $Descuento = 0;
 
-        //si el uid de cliente no está vacio entonces...
-        if (!empty($clientUID)) {
-            $clientFactura = $this->getClientFacturacom($clientRFC);
-        } else {
-            //preparamos la inserción de cliente
-            $params = array(
-                'nombre' => $clientData["general-nombre"],
-                'apellidos' => $clientData["general-apellidos"],
-                'email' => $clientData["general-email"],
-                'telefono' => $clientData["fiscal-telefono"],
-                'razons' => $clientData["fiscal-nombre"],
-                'rfc' => $clientData["fiscal-rfc"],
-                'calle' => $clientData["fiscal-calle"],
-                'numero_exterior' => $clientData["fiscal-exterior"],
-                'numero_interior' => $clientData["fiscal-interior"],
-                'codpos' => $clientData["fiscal-cp"],
-                'colonia' => $clientData["fiscal-colonia"],
-                'estado' => $clientData["fiscal-estado"],
-                'ciudad' => $clientData["fiscal-municipio"],
-                'delegacion' => $clientData["fiscal-municipio"],
-                'save' => true,
-                'client_reference' => $clientW,
-            );
+        //preparamos la inserción de cliente
+		$params = array(
+			'nombre' => $clientData["general-nombre"],
+			'apellidos' => $clientData["general-apellidos"],
+			'email' => $clientData["general-email"],
+			'telefono' => $clientData["fiscal-telefono"],
+			'razons' => $clientData["fiscal-nombre"],
+			'rfc' => $clientData["fiscal-rfc"],
+			'calle' => $clientData["fiscal-calle"],
+			'numero_exterior' => $clientData["fiscal-exterior"],
+			'numero_interior' => $clientData["fiscal-interior"],
+			'codpos' => $clientData["fiscal-cp"],
+			'colonia' => $clientData["fiscal-colonia"],
+			'estado' => $clientData["fiscal-estado"],
+			'ciudad' => $clientData["fiscal-municipio"],
+			'delegacion' => $clientData["fiscal-municipio"],
+			'save' => true,
+			'client_reference' => $clientW,
+		);
 
-            $processClient = $this->sendClientFacturacom($params, $clientUID);
+		//enviamos la info
+		$processClient = $this->sendClientFacturacom($params, $clientUID);
+		//print_r($processClient); die;
 
-            if ($processClient->response != 'success') {
-                return [
-                    'response' => 'error',
-                    'message' => 'Ha ocurrido un error. Por favor revise sus datos e inténtelo de nuevo.',
-                ];
-            }
+		//validamos el proceso
+		if ($processClient->response == 'error') {
+			return [
+				'response' => 'error',
+				'message' => 'Ha ocurrido un error. Por favor revise sus datos e inténtelo de nuevo.',
+			];
+		}
 
-            $clientFactura = $processClient;
-        }
-
+		$clientFactura = $processClient;
         $itemsCollection = $orderItems;
         $invoiceConcepts = [];
         //print_r($orderItems); die;
@@ -521,7 +524,10 @@ class CoreModule
                 $TipoFactor = 'Exento';
                 $importeImpuesto = 0;
                 $TasaOCuota = 0;
-            }
+            } else if ($importeImpuesto < 0) {
+				$Descuento += ($productPrice * -1);
+				continue;
+			}
 
             $product = [
                 'ClaveProdServ' => $value->ClaveProdServ,
@@ -547,12 +553,27 @@ class CoreModule
             $num_cta = $numerocuenta;
         }
 
-        //return print_r($invoiceConcepts);
+        // Volvemos a recorrer los conceptos para agregar el descuento
+		$asignaDescuento = 0;
+		$Descuento = round($Descuento, 2);
+		foreach ($invoiceConcepts as $kconept => $concept) {
+			# code...
+			if (($concept['ValorUnitario'] * $concept['Cantidad']) > $Descuento && $asignaDescuento == 0) {
+				$invoiceConcepts[$kconept]['Descuento'] = $Descuento;
+
+				foreach ($invoiceConcepts[$kconept]['Impuestos']['Traslados'] as $kt => $valtras) {
+					# code...
+					$invoiceConcepts[$kconept]['Impuestos']['Traslados'][$kt]['Importe'] = round(((($concept['ValorUnitario'] * $concept['Cantidad']) - $Descuento) * 0.16), 2);
+				}
+
+				$asignaDescuento++;
+			}
+		}
 
         $invoiceData = [
             "Receptor" => ["UID" => $clientFactura['Data']['UID']],
             "TipoDocumento" => "factura",
-            "UsoCFDI" => $Setting["UsoCFDI"],
+            "UsoCFDI" => $usoCFDI,
             "Redondeo" => 2,
             "Conceptos" => $invoiceConcepts,
             "numerocuenta" => $numerocuenta,
@@ -733,6 +754,35 @@ class CoreModule
         return $response;
 
     }
+
+    public function getUsoCFDI() {
+		$usosCFDI = [
+			'G01' => 'Adquisición de mercancias',
+			'G02' => 'Devoluciones, descuentos o bonificaciones',
+			'G03' => 'Gastos en general',
+			'I01' => 'Construcciones',
+			'I02' => 'Mobilario y equipo de oficina por inversiones',
+			'I03' => 'Equipo de transporte',
+			'I04' => 'Equipo de computo y accesorios',
+			'I05' => 'Dados, troqueles, moldes, matrices y herramental',
+			'I06' => 'Comunicaciones telefónicas',
+			'I07' => 'Comunicaciones satelitales',
+			'I08' => 'Otra maquinaria y equipo',
+			'D01' => 'Honorarios médicos, dentales y gastos hospitalarios.',
+			'D02' => 'Gastos médicos por incapacidad o discapacidad',
+			'D03' => 'Gastos funerales.',
+			'D04' => 'Donativos.',
+			'D05' => 'Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).',
+			'D06' => 'Aportaciones voluntarias al SAR.',
+			'D07' => 'Primas por seguros de gastos médicos.',
+			'D08' => 'Gastos de transportación escolar obligatoria.',
+			'D09' => 'Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.',
+			'D10' => 'Pagos por servicios educativos (colegiaturas)',
+			'P01' => 'Por definir',
+		];
+
+		return $usosCFDI;
+	}
 
 
 }

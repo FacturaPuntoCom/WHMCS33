@@ -108,6 +108,7 @@ function createInvoice()
     $clientW = $_POST['clientW'];
     $paymentMethod = $_POST['paymentMethod'];
     $numerocuenta = $_POST['numerocuenta'];
+    $usoCFDI = $_POST['UsoCFDI'];
 
-    return $CoreModule->createInvoice($orderNum, $orderItems, $clientData, $serieInvoices, $clientW, $paymentMethod, $numerocuenta);
+    return $CoreModule->createInvoice($orderNum, $orderItems, $clientData, $serieInvoices, $clientW, $paymentMethod, $numerocuenta, $usoCFDI);
 }
