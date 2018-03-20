@@ -146,8 +146,13 @@ class CoreModule
         $invoicesObj = Capsule::table('tblinvoices')
             ->where('tblinvoices.userid', $UserID)
             ->get();
+        $NumInvoices = [];
 
         foreach ($invoicesObj as $key => $value) {
+
+            //asigamos los pedidos a un arreglo
+			$NumInvoices[] = $value->id;
+            
             $invoiceList[$value->id]["orderId"] = $value->id;
             $invoiceList[$value->id]["orderNum"] = $value->id;
             $invoiceList[$value->id]["clientId"] = $value->userid;
@@ -224,7 +229,7 @@ class CoreModule
 
         }
 
-        $facturaInvoices = $this->getInvoicesFacturacom($UserID)['data'];
+        $facturaInvoices = $this->getInvoicesFacturacom($UserID, $NumInvoices)['data'];
 
         foreach ($facturaInvoices as $key => $value) {
             $facturaInvoiceList[$value['NumOrder']] = $value;
