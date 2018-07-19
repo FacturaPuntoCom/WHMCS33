@@ -152,7 +152,7 @@ class CoreModule
 
             //asigamos los pedidos a un arreglo
 			$NumInvoices[] = $value->id;
-            
+
             $invoiceList[$value->id]["orderId"] = $value->id;
             $invoiceList[$value->id]["orderNum"] = $value->id;
             $invoiceList[$value->id]["clientId"] = $value->userid;
@@ -261,6 +261,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -341,6 +342,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -361,6 +363,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -394,6 +397,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -429,6 +433,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -464,38 +469,39 @@ class CoreModule
         $Descuento = 0;
 
         //preparamos la inserción de cliente
-		$params = array(
-			'nombre' => $clientData["general-nombre"],
-			'apellidos' => $clientData["general-apellidos"],
-			'email' => $clientData["general-email"],
-			'telefono' => $clientData["fiscal-telefono"],
-			'razons' => $clientData["fiscal-nombre"],
-			'rfc' => $clientData["fiscal-rfc"],
-			'calle' => $clientData["fiscal-calle"],
-			'numero_exterior' => $clientData["fiscal-exterior"],
-			'numero_interior' => $clientData["fiscal-interior"],
-			'codpos' => $clientData["fiscal-cp"],
-			'colonia' => $clientData["fiscal-colonia"],
-			'estado' => $clientData["fiscal-estado"],
-			'ciudad' => $clientData["fiscal-municipio"],
-			'delegacion' => $clientData["fiscal-municipio"],
-			'save' => true,
-			'client_reference' => $clientW,
-		);
+    		$params = array(
+    			'nombre' => $clientData["general-nombre"],
+    			'apellidos' => $clientData["general-apellidos"],
+    			'email' => $clientData["general-email"],
+    			'telefono' => $clientData["fiscal-telefono"],
+    			'razons' => $clientData["fiscal-nombre"],
+    			'rfc' => $clientData["fiscal-rfc"],
+    			'calle' => $clientData["fiscal-calle"],
+    			'numero_exterior' => $clientData["fiscal-exterior"],
+    			'numero_interior' => $clientData["fiscal-interior"],
+    			'codpos' => $clientData["fiscal-cp"],
+    			'colonia' => $clientData["fiscal-colonia"],
+    			'estado' => $clientData["fiscal-estado"],
+    			'ciudad' => $clientData["fiscal-municipio"],
+    			'delegacion' => $clientData["fiscal-municipio"],
+    			'save' => true,
+    			'client_reference' => $clientW,
+    		);
 
-		//enviamos la info
-		$processClient = $this->sendClientFacturacom($params, $clientUID);
-		//print_r($processClient); die;
+    		//enviamos la info
 
-		//validamos el proceso
-		if ($processClient->response == 'error') {
-			return [
-				'response' => 'error',
-				'message' => 'Ha ocurrido un error. Por favor revise sus datos e inténtelo de nuevo.',
-			];
-		}
+    		$processClient = $this->sendClientFacturacom($params, $clientUID);
+    		//print_r($processClient); die;
 
-		$clientFactura = $processClient;
+    		//validamos el proceso
+    		if ($processClient->response == 'error') {
+    			return [
+    				'response' => 'error',
+    				'message' => 'Ha ocurrido un error. Por favor revise sus datos e inténtelo de nuevo.',
+    			];
+    		}
+
+		    $clientFactura = $processClient;
         $itemsCollection = $orderItems;
         $invoiceConcepts = [];
         //print_r($orderItems); die;
@@ -518,13 +524,11 @@ class CoreModule
                 $productPrice = $value->amount;
             }
 
-            //Nodo:Traslado
-            $NodoTraslado =
 
             $importeImpuesto = round(($productPrice * 0.16), 2);
 
             //Para productos cero pesos
-            if($importeImpuesto <  1) {
+            if($importeImpuesto >=  0 && $importeImpuesto <=  1) {
                 $productPrice = 0.01;
                 $TipoFactor = 'Exento';
                 $importeImpuesto = 0;
@@ -599,6 +603,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -639,6 +644,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ]);
@@ -687,6 +693,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ])->json();
@@ -719,6 +726,7 @@ class CoreModule
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
             ],
         ]);
