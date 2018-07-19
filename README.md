@@ -1,6 +1,11 @@
-# WHMCS Addon de Factura.com versión 2.0.8
+# WHMCS Addon de Factura.com versión 2.1
 
 # Changelog
+
+## [2.1] - 2018-07-19
+
+### Added
+- Se agregó el soporte para productos con descuento.
 
 
 ## [2.0.8] - 2018-03-20
