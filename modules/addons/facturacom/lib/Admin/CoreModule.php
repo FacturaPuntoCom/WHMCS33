@@ -222,6 +222,8 @@ class CoreModule
                 if($today->day > $configEntity['DayOff']) {
                     $invoiceList[$value->id]["open"] = false;
                 }
+            } else if($dt->month < $today->month && ($today->month - $dt->month) > 1) {
+                $invoiceList[$value->id]["open"] = false;
             }
 
 
