@@ -219,14 +219,10 @@ class CoreModule
 
             //validamos que este dentro del rango para habilitar el boton de facturar
             if($dt->month < $today->month && $configEntity['DayOff'] !== 0) {
-                if($today->day > $configEntity['DayOff']) {
+                if($today->day > $configEntity['DayOff'] || ($today->month - $dt->month) > 1) {
                     $invoiceList[$value->id]["open"] = false;
                 }
-            } else if($dt->month < $today->month && ($today->month - $dt->month) > 1) {
-                $invoiceList[$value->id]["open"] = false;
             }
-
-
 
         }
 

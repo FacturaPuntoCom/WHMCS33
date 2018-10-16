@@ -1,6 +1,11 @@
-# WHMCS Addon de Factura.com versión 2.1
+# WHMCS Addon de Factura.com versión 2.1.2
 
 # Changelog
+
+## [2.1.2] - 2018-10-16
+
+### Fixed
+- Verifica compras de meses pasados y bloquea su facturación.
 
 ## [2.1.1] - 2018-10-16
 
