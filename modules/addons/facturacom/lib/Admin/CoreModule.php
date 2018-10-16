@@ -207,24 +207,23 @@ class CoreModule
             Carbon::setLocale('es');
             $strtotime = strtotime($value->datepaid);
             $fpago = explode("-", date("Y-m-d", $strtotime));
+            $today = Carbon::now();
+
+
 
             if(is_null($strtotime) || $strtotime < 1) {
-                $dt = Carbon::createFromDate(2000, 01, 01);
+                $dt = Carbon::createFromDate(2018, 01, 01);
             } else {
                 $dt = Carbon::createFromDate($fpago[0], $fpago[1], $fpago[2]);
             }
 
-            //Sacamos la diferencia
-            if($dt->diffInDays(Carbon::now()) > 30) {
-                $diferenciaDicas = $dt->diffInDays(Carbon::now());
-            } else {
-                $diferenciaDicas =  ($dt->diffInDays(Carbon::now()) - $dt->daysInMonth);
+            //validamos que este dentro del rango para habilitar el boton de facturar
+            if($dt->month < $today->month && $configEntity['DayOff'] !== 0) {
+                if($today->day > $configEntity['DayOff']) {
+                    $invoiceList[$value->id]["open"] = false;
+                }
             }
 
-            //si la orden no está facturada y tiene dias entonces
-            if(intval($diferenciaDicas) > $configEntity['DayOff']) {
-                $invoiceList[$value->id]["open"] = false;
-            }
 
 
         }

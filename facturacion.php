@@ -24,7 +24,7 @@ if ($ca->isLoggedIn()) {
     $systemURL = $CoreModule->getSystemURL();
 
     //traemos todas las facturas.
-    $Invoices = $CoreModule->getInvoicesFacturacom($ca->getUserID());
+    $Invoices = $CoreModule->getInvoicesFacturacom($ca->getUserID(), false);
     $clientInvoices = [];
 
     //Todas las orders del usuario

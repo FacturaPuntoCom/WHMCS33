@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [2.1.1] - 2018-10-16
+
+### Fixed
+- Se solucionó el problema para validar pedidos que pueden ser facturados dentro de un rango de dias después del mes de compra.
+
+
 ## [2.1] - 2018-07-19
 
 ### Added
