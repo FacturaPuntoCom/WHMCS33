@@ -246,7 +246,7 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        if (!isset($Pedidos)) {
+        if (!is_null($Pedidos)) {
 			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID;
 		} else {
 			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
