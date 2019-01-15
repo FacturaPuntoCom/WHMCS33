@@ -44,7 +44,7 @@
             <tr>
                 <td>  {$invoice.Folio} </td>
                 <td>  {$invoice.FechaTimbrado} </td>
-                <td>  {$invoice.Receptor} </td>
+                <td>  {$invoice.RazonSocialReceptor} </td>
                 <td><a href="{$systemURL}admin/clientssummary.php?userid={$invoice.ReferenceClient}" target="_blank">{$invoice.ReferenceClient}</a></td>
                 <td><a href="{$systemURL}admin/invoices.php?action=edit&id={$invoice.NumOrder}" target="_blank">{$invoice.NumOrder}</a></td>
                 <td>  $ {$invoice.Total|number_format:2:".":","} </td>

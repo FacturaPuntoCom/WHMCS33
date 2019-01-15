@@ -1,6 +1,11 @@
-# WHMCS Addon de Factura.com versión 2.1.4
+# WHMCS Addon de Factura.com versión 2.2.0
 
 # Changelog
+
+## [2.2.0] - 2019-01-15
+
+### Fixed
+- Se corrige panel de administración ahora muestra correctamente la razon social del receptor.
 
 ## [2.1.4] - 2018-11-23
 
