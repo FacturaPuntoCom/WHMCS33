@@ -24,7 +24,7 @@
             {foreach key=num item=order from=$whmcsInvoices}
                 <tr>
                     <td>
-                        <a href="clientarea.php?action=productdetails&amp;id={$order.orderId}">{$order.orderId}</a>
+                        <a href="viewinvoice.php?id={$order.orderId}">{$order.orderId}</a>
                     </td>
                     <td>{$order.orderDate}</td>
                     <td>{$order.invoiceDatePaid}</td>
@@ -74,7 +74,7 @@
                     <td>{$invoice.Folio}</td>
                     <td><span class="hidden">{$invoice.FechaTimbrado}</span>{$invoice.FechaTimbrado}</td>
                     <td>{$invoice.Receptor}</td>
-                    <td><a href="clientarea.php?action=productdetails&amp;id={$invoice.NumOrder}">{$invoice.NumOrder}</a></td>
+                    <td><a href="viewinvoice.php?id={$invoice.NumOrder}">{$invoice.NumOrder}</a></td>
                     <td>${$invoice.Total|number_format:2:".":","}</td>
                     <td><span class="label status status-{if $invoice.Status eq 'enviada'}paid{else}cancelled{/if}">{$invoice.Status}</span></td>
                     <td class="responsive-edit-button">
