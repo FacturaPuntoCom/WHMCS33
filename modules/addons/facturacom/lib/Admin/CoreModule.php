@@ -524,7 +524,7 @@ class CoreModule
             }
 
 
-            $importeImpuesto = round(($productPrice * 0.16), 2);
+            $importeImpuesto = round(($productPrice * 0.16), 6);
 
             //Para productos cero pesos
             if($importeImpuesto >=  0 && $importeImpuesto <=  1) {
