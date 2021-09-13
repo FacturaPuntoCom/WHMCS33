@@ -16,7 +16,8 @@ header('Access-Control-Allow-Origin: https://factura.com');
 
 if (isset($_POST['function'])) {
     $resultado = null;
-    eval('$resultado = ' . $_POST['function'] . '();');
+    $func = $_POST['function'];
+    $resultado = $func();
     echo json_encode($resultado);
 } else {
     echo json_encode(array("Error" => "Fail"));
