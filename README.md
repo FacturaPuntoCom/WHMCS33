@@ -1,4 +1,9 @@
-# WHMCS Addon de Factura.com versión 2.2.0
+# WHMCS Addon de Factura.com versión 2.2.1
+
+### Fixed
+- Se corrige la forma de aplicar el descuento, ahora se reparte el valor en todos los conceptos.
+
+## [2.2.1] - 2022-01-04
 
 # Changelog
 
