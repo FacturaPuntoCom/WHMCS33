@@ -466,6 +466,7 @@ class CoreModule
         $clientRFC = $clientData['fiscal-rfc'];
         $invoiceData = [];
         $Descuento = 0;
+        $total = 0;
 
         //preparamos la inserción de cliente
     		$params = array(
@@ -553,6 +554,8 @@ class CoreModule
             ];
 
             array_push($invoiceConcepts, $product);
+
+            $total += $productPrice;
         }
 
         if ($numerocuenta == '') {
@@ -560,23 +563,62 @@ class CoreModule
         } else {
             $num_cta = $numerocuenta;
         }
+        
+        if($Descuento > 0){ // Si hay algun descuento se lo aplicamos
+            
+            if($Descuento >= $total){
+                return ['response' => 'error', 'message' => 'La cantidad a descontar no puede ser mayor o igual que el total de los conceptos'];
+            }
 
-        // Volvemos a recorrer los conceptos para agregar el descuento
-		$asignaDescuento = 0;
-		$Descuento = round($Descuento, 2);
-		foreach ($invoiceConcepts as $kconept => $concept) {
-			# code...
-			if (($concept['ValorUnitario'] * $concept['Cantidad']) > $Descuento && $asignaDescuento == 0) {
-				$invoiceConcepts[$kconept]['Descuento'] = $Descuento;
+            $porcentaje_descuento = $Descuento / $total;
+            $centavos_faltantes = 0;
+            $contador = 0;
 
-				foreach ($invoiceConcepts[$kconept]['Impuestos']['Traslados'] as $kt => $valtras) {
-					# code...
-					$invoiceConcepts[$kconept]['Impuestos']['Traslados'][$kt]['Importe'] = round(((($concept['ValorUnitario'] * $concept['Cantidad']) - $Descuento) * 0.16), 2);
+            foreach($invoiceConcepts as $kconept => $concept){
+
+                $contador++;
+
+                $importe = $concept['ValorUnitario'] * $concept['Cantidad'];
+                $desc = $importe * $porcentaje_descuento;
+
+                if($importe > $desc + $centavos_faltantes){
+                    $desc += $centavos_faltantes;
+                    $centavos_faltantes = 0;
+                }
+
+                $decimas = explode(".", $desc);
+                
+                // Verificamos que no exceda el máximo de decimales
+                if(count($decimas) > 1){
+                    if(strlen($decimas[1]) > 6) {
+
+                        if(count($invoiceConcepts) == $contador && $centavos_faltantes == 0){
+                            $desc = round($desc, 6);
+                        } else {
+                            $nuevoDesc = bcdiv($desc, '1', 6);
+                            $centavos_faltantes += $desc - $nuevoDesc;
+                            $desc = $nuevoDesc;
+                        }
+                    }
+                }
+
+                $invoiceConcepts[$kconept]['Descuento'] = $desc;
+
+                // Recalculamos el impuesto
+                foreach ($invoiceConcepts[$kconept]['Impuestos']['Traslados'] as $kt => $valtras) {
+					$invoiceConcepts[$kconept]['Impuestos']['Traslados'][$kt]['Base'] = round($importe - $desc, 6);
+					$invoiceConcepts[$kconept]['Impuestos']['Traslados'][$kt]['Importe'] = round((($importe - $desc) * 0.16), 2);
 				}
+            }
 
-				$asignaDescuento++;
-			}
-		}
+
+            //En este punto ya distribuimos el descuento hasta la 1x10^-6, los centavos despues de eso se redondean a 6 decimas en el ultimo concepto
+            // Por ejemplo: Si aplicamos un descuento de 10 pesos a 3 conceptos...
+            // Descuento del concepto #1: 3.333333
+            // Descuento del concepto #2: 3.333333
+            // Descuento del concepto #3: 3.333334            
+        }
+        
 
         $invoiceData = [
             "Receptor" => ["UID" => $clientFactura['Data']['UID']],
