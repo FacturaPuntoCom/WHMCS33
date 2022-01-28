@@ -91,12 +91,28 @@
                 <h4 class="modal-title" id="facturaModalLabel">Cancelar Factura.com</h4>
             </div>
             <div class="modal-body" id="facturaModalText">
-                ¿Seguro que desea cancelar esta factura?
+                <p>¿Seguro que desea cancelar esta factura?</p>
+                <br>
+                <div class="space">
+                    <p>Sí es así, por favor selecciona un motivo de cancelación</p>
+                    <select id="motivo" class="form-control" name="motivo" placeholder="Selecciona una opción">
+                        <option value="01">01 - Comprobante emitido con errores con relación</option>
+                        <option value="02">02 - Comprobante emitido con errores sin relación</option>
+                        <option value="03">03 - No se llevó a cabo la operación</option>
+                        <option value="04">04 - Operación nominiativa relacionada en una factura global</option>
+                    </select>
+                </div>
+                <br>
+                <div class="space" id="grupoUID">
+                    <p>Escribe el UID o el UUID/folio físcal del CFDI sustituto</p>
+                    <input type="text" class="form-control" id="uid" name="uid" placeholder="Escribe el folio fiscal o uid">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="cancelInvoiceBtn">Cencelar factura</button>
+                <button type="button" class="btn btn-primary" id="cancelInvoiceBtn">Cancelar factura</button>
                 <button type="button" data-dismiss="modal" class="btn">Conservar factura</button>
             </div>
         </div>
     </div>
+
 </div>

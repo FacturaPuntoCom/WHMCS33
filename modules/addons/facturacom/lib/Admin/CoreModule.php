@@ -760,17 +760,18 @@ class CoreModule
         } else {
             $uri = $uri_base . 'v1/invoice/' . $params['uid'] . '/cancel';
         }
-
+        
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
-        $request = $restApi->get($uri, [
+        $request = $restApi->post($uri, [
+            'json' => $params,
             'headers' => [
                 'F-API-KEY' => $Setting['ApiKey'],
                 'F-SECRET-KEY' => $Setting['ApiSecret'],
                 'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
                 'Content-Type' => 'application/json',
-            ],
-        ]);
+            ]
+        ])->json();
 
         return $request;
     }
