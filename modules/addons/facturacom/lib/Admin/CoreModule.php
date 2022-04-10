@@ -32,7 +32,7 @@ class CoreModule
     public function getURL($parameters)
     {
         if ($parameters['sandbox'] === 'on') {
-            return 'http://devfactura.in/api/';
+            return 'https://sandbox.factura.com/api/';
         } else {
             return 'https://factura.com/api/';
         }
@@ -247,9 +247,9 @@ class CoreModule
         $uri_base = $this->getURL($Setting);
 
         if (!is_null($Pedidos)) {
-			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID;
+			$uri = $uri_base . 'v3/cfdi40/list?type_document=factura&client_reference=' . $UserID;
 		} else {
-			$uri = $uri_base . 'v3/cfdi33/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
+			$uri = $uri_base . 'v3/cfdi40/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
 		}
 
         $invoices_filtred = [];
@@ -354,7 +354,7 @@ class CoreModule
 
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
-        $uri = $uri_base . 'v3/cfdi33/list?type_document=factura';
+        $uri = $uri_base . 'v3/cfdi40/list?type_document=factura';
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -476,6 +476,7 @@ class CoreModule
     			'telefono' => $clientData["fiscal-telefono"],
     			'razons' => $clientData["fiscal-nombre"],
     			'rfc' => $clientData["fiscal-rfc"],
+                'regimen' => $clientData["fiscal-regimen"],
     			'calle' => $clientData["fiscal-calle"],
     			'numero_exterior' => $clientData["fiscal-exterior"],
     			'numero_interior' => $clientData["fiscal-interior"],
@@ -635,7 +636,7 @@ class CoreModule
             "EnviarCorreo" => 'true',
         ];
 
-        $uri = $uri_base . 'v3/cfdi33/create';
+        $uri = $uri_base . 'v3/cfdi40/create';
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -672,8 +673,8 @@ class CoreModule
         $uri_base = $this->getURL($Setting);
 
         //verificamos version f
-        if ($params['version'] == '3.3') {
-            $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/' . $params['type'];
+        if ($params['version'] == '4.0') {
+            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/' . $params['type'];
         } else {
             $uri = $uri_base . 'publica/invoice/' . $params['uid'] . '/' . $params['type'];
             return header("Location: " . $uri);
@@ -722,8 +723,8 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        if ($params['version'] == '3.3') {
-            $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/email';
+        if ($params['version'] == '4.0') {
+            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/email';
         } else {
             $uri = $uri_base . 'v1/invoice/' . $params['uid'] . '/email';
         }
@@ -755,8 +756,8 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        if ($params['version'] == '3.3') {
-            $uri = $uri_base . 'v3/cfdi33/' . $params['uid'] . '/cancel';
+        if ($params['version'] == '4.0') {
+            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/cancel';
         } else {
             $uri = $uri_base . 'v1/invoice/' . $params['uid'] . '/cancel';
         }
@@ -833,11 +834,35 @@ class CoreModule
 			'D08' => 'Gastos de transportación escolar obligatoria.',
 			'D09' => 'Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.',
 			'D10' => 'Pagos por servicios educativos (colegiaturas)',
-			'P01' => 'Por definir',
+			'S01' => 'Sin efectos fiscales',
 		];
 
 		return $usosCFDI;
 	}
 
+    public function getRegimenesFiscales() {
+		$regimenes = [
+            '601' => 'General de Ley Personas Morales',
+            '603' => 'Personas Morales con Fines no Lucrativos',
+            '605' => 'Sueldos y Salarios e Ingresos Asimilados a Salarios',
+            '606' => 'Arrendamiento',
+            '607' => 'Régimen de Enajenación o Adquisición de Bienes',
+            '608' => 'Demás ingresos',
+            '610' => 'Residentes en el Extranjero sin Establecimiento Permanente en México',
+            '611' => 'Ingresos por Dividendos (socios y accionistas)',
+            '612' => 'Personas Físicas con Actividades Empresariales y Profesionales',
+            '614' => 'Ingresos por intereses',
+            '615' => 'Régimen de los ingresos por obtención de premios',
+            '616' => 'Ingresos por Dividendos (socios y accionistas)',
+            '620' => 'Sociedades Cooperativas de Producción que optan por diferir sus ingresos',
+            '621' => 'Incorporación Fiscal',
+            '622' => 'Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras',
+            '623' => 'Opcional para Grupos de Sociedades',
+            '624' => 'Coordinados',
+            '625' => 'Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas',
+            '626' => 'Régimen Simplificado de Confianza'
+        ];
 
+		return $regimenes;
+    }
 }
