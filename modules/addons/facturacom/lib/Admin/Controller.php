@@ -27,7 +27,7 @@ class Controller {
         $modulelink = $vars['modulelink']; // eg. addonmodules.php?module=addonmodule
         $version = $vars['version']; // eg. 1.0
         $LANG = $vars['_lang']; // an array of the currently loaded language variables
-        $uri = $uri_base . 'cfdi33/list?type_document=factura';
+        $uri = $uri_base . 'cfdi40/list?type_document=factura';
         $invoices_filtred = [];
 
 

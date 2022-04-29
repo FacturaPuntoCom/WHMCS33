@@ -1,4 +1,8 @@
-# WHMCS Addon de Factura.com versión 2.2.2
+# WHMCS Addon de Factura.com versión 2.3.0
+
+### Added
+- Se sustituye la versión de CFDI 3.3 por 4.0
+## [2.3.0] - 2022-04-09
 
 ### Added
 - Se agregó el metodo de cancelación con motivo para la reforma físcal 2022

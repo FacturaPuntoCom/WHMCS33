@@ -141,6 +141,14 @@
                             <label for="fiscal-nombre">Razón Social</label>
                             <input type="text" class="input-cap f-input f-top" id="fiscal-nombre" name="fiscal-nombre" value="" placeholder="" data-validation="required" data-validation-error-msg="Por favor ingrese un valor válido" >
                         </div>
+                         <div class="input-group">
+                            <label for="fiscal-nombre">Régimen fiscal</label>
+                            <select class="input-cap f-input f-top valid" id="fiscal-regimen">
+                                {foreach $Regimenes as $key => $regimen}
+                                    <option value="{$key}">{$regimen}</option>
+                                {/foreach}
+                            </select>
+                        </div>
                         <div class="input-group">
                             <label for="fiscal-calle">Calle</label>
                             <input type="text" class="input-cap f-input f-no-top" id="fiscal-calle" name="fiscal-calle" value="" placeholder="" data-validation="required" data-validation-error-msg="Por favor ingrese un valor válido" >

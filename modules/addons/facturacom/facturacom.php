@@ -27,11 +27,11 @@ function facturacom_config()
 {
     $configarray = [
         'name' => 'Factura.com',
-        'version' => '2.0.8',
+        'version' => '2.1.0',
         'author' => 'Factura.com',
         'logo' => '../modules/addons/facturacom/factura-addon-icon.png',
         'description' => 'Módulo de integración con el servicio de
-                    Factura.com para administrar y emitir facturas electrónicas. Ahora el plugin tiene soporte para timbrado de CFDI 3.3.',
+                    Factura.com para administrar y emitir facturas electrónicas. Ahora el plugin tiene soporte para timbrado de CFDI 4.0',
         'fields' => [
             'ApiKey' => [
                 "FriendlyName" => "API KEY",

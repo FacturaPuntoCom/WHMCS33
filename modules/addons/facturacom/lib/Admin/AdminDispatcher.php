@@ -36,7 +36,7 @@ class AdminDispatcher {
     private function setURL($parameters)
     {
         if($parameters['sandbox'] === 'on') {
-            return 'http://devfactura.in/api/v3/';
+            return 'https://sandbox.factura.com/api/v3/';
         } else {
             return 'https://factura.com/api/v3/';
         }
