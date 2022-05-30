@@ -143,7 +143,7 @@
                         </div>
                          <div class="input-group">
                             <label for="fiscal-nombre">Régimen fiscal</label>
-                            <select class="input-cap f-input f-top valid" id="fiscal-regimen">
+                            <select class="input-cap f-input f-top valid" id="fiscal-regimen" name="fiscal-regimen">
                                 {foreach $Regimenes as $key => $regimen}
                                     <option value="{$key}">{$regimen}</option>
                                 {/foreach}
