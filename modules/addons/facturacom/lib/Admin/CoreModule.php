@@ -874,7 +874,7 @@ class CoreModule
         }
 
         $Setting = $this->getGonfiguration();
-        $uri = $this->getURL($Setting) . 'v4/cfdi40/getComplementsByInvoice/' . $uuid;
+        $uri = $this->getURL($Setting) . 'v4/getComplementsByInvoice/' . $uuid;
 
         $restApi = new Client;
         $request = $restApi->get($uri, [
