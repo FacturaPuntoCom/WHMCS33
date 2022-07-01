@@ -117,3 +117,9 @@ function createInvoice()
 
     return $CoreModule->createInvoice($orderNum, $orderItems, $clientData, $serieInvoices, $clientW, $paymentMethod, $numerocuenta, $usoCFDI);
 }
+
+function getComplementsByInvoice()
+{
+    $CoreModule = new CoreModule;
+    return $CoreModule->getComplementsByInvoice($_POST['uuid']);
+}

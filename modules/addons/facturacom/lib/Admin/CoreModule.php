@@ -864,4 +864,28 @@ class CoreModule
 
 		return $regimenes;
     }
+
+    public function getComplementsByInvoice($uuid) {
+        if (!isset($uuid)) {
+            return [
+                'response' => 'error',
+                'message' => 'No hemos recibido parametros para procesar',
+            ];
+        }
+
+        $Setting = $this->getGonfiguration();
+        $uri = $this->getURL($Setting) . 'v4/cfdi40/getComplementsByInvoice/' . $uuid;
+
+        $restApi = new Client;
+        $request = $restApi->get($uri, [
+            'headers' => [
+                'F-API-KEY' => $Setting['ApiKey'],
+                'F-SECRET-KEY' => $Setting['ApiSecret'],
+                'F-PLUGIN' => '60db2b9bf9790c1f4826429aee141291a6090c37',
+                'Content-Type' => 'application/json',
+            ],
+        ])->json();
+
+        return $request;
+    }
 }
