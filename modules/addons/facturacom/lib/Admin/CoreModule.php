@@ -474,7 +474,7 @@ class CoreModule
     			'apellidos' => $clientData["general-apellidos"],
     			'email' => $clientData["general-email"],
     			'telefono' => $clientData["fiscal-telefono"],
-    			'razons' => $clientData["fiscal-nombre"],
+    			'razons' => htmlspecialchars_decode($clientData["fiscal-nombre"]),
     			'rfc' => $clientData["fiscal-rfc"],
                 'regimen' => $clientData["fiscal-regimen"],
     			'calle' => $clientData["fiscal-calle"],
