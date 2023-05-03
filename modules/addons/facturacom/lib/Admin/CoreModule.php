@@ -34,7 +34,7 @@ class CoreModule
         if ($parameters['sandbox'] === 'on') {
             return 'https://sandbox.factura.com/api/';
         } else {
-            return 'https://factura.com/api/';
+            return 'https://api.factura.com/';
         }
     }
 
@@ -247,9 +247,9 @@ class CoreModule
         $uri_base = $this->getURL($Setting);
 
         if (!is_null($Pedidos)) {
-			$uri = $uri_base . 'v3/cfdi40/list?type_document=factura&client_reference=' . $UserID;
+			$uri = $uri_base . 'v4/cfdi/list?type_document=factura&client_reference=' . $UserID;
 		} else {
-			$uri = $uri_base . 'v3/cfdi40/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
+			$uri = $uri_base . 'v4/cfdi/list?type_document=factura&client_reference=' . $UserID . '&pedidos=' . base64_encode(implode(",", $Pedidos));
 		}
 
         $invoices_filtred = [];
@@ -354,7 +354,7 @@ class CoreModule
 
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
-        $uri = $uri_base . 'v3/cfdi40/list?type_document=factura';
+        $uri = $uri_base . 'v4/cfdi/list?type_document=factura';
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -636,7 +636,7 @@ class CoreModule
             "EnviarCorreo" => 'true',
         ];
 
-        $uri = $uri_base . 'v3/cfdi40/create';
+        $uri = $uri_base . 'v4/cfdi40/create';
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -653,7 +653,7 @@ class CoreModule
         $response = $createInvoice;
 
         if($response['response'] == 'error' && is_array($response['message'])) {
-            $response = ['response' => 'error', 'message' => $response['message']['message']];
+            $response = ['response' => 'error', 'message' => $response['message']['message'], 'UID' => $clientFactura['Data']['UID']];
         }
 
         return $response;
@@ -673,12 +673,7 @@ class CoreModule
         $uri_base = $this->getURL($Setting);
 
         //verificamos version f
-        if ($params['version'] == '4.0') {
-            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/' . $params['type'];
-        } else {
-            $uri = $uri_base . 'publica/invoice/' . $params['uid'] . '/' . $params['type'];
-            return header("Location: " . $uri);
-        }
+        $uri = $uri_base . 'v4/cfdi40/' . $params['uid'] . '/' . $params['type'];
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -723,11 +718,7 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        if ($params['version'] == '4.0') {
-            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/email';
-        } else {
-            $uri = $uri_base . 'v1/invoice/' . $params['uid'] . '/email';
-        }
+        $uri = $uri_base . 'v4/cfdi40/' . $params['uid'] . '/email';
 
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;
@@ -756,11 +747,7 @@ class CoreModule
         $Setting = $this->getGonfiguration();
         $uri_base = $this->getURL($Setting);
 
-        if ($params['version'] == '4.0') {
-            $uri = $uri_base . 'v3/cfdi40/' . $params['uid'] . '/cancel';
-        } else {
-            $uri = $uri_base . 'v1/invoice/' . $params['uid'] . '/cancel';
-        }
+        $uri = $uri_base . 'v4/cfdi40/' . $params['uid'] . '/cancel';
         
         //Conectamos con api factura.com y tramos todas las facturas
         $restApi = new Client;

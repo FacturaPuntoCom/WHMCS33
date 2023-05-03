@@ -36,9 +36,9 @@ class AdminDispatcher {
     private function setURL($parameters)
     {
         if($parameters['sandbox'] === 'on') {
-            return 'https://sandbox.factura.com/api/v3/';
+            return 'https://sandbox.factura.com/api/v4/';
         } else {
-            return 'https://factura.com/api/v3/';
+            return 'https://api.factura.com/v4/';
         }
     }
 }
