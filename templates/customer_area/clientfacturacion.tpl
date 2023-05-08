@@ -53,7 +53,7 @@
     </table>
 </div>
 
-<h3>Hitorial de facturas</h3>
+<h3>Historial de facturas</h3>
 <div class="table-container clearfix">
     <table id="tableClientInvoicesList" class="table table-list">
         <thead>
