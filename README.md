@@ -1,5 +1,8 @@
-# WHMCS Addon de Factura.com versión 2.4.0
+# WHMCS Addon de Factura.com versión 2.4.1
 
+### Added
+- Se añade el regimen 616: Sin obligaciones fiscales
+## [2.4.1] - 2023-09-14
 ### Added
 - Se ha cambiado el host https://factura.com por https://api.factura.com
 - Se cambiaron los endpoints de listar cfdis, enviar correos para mejorar el tiempo de respuesta.
